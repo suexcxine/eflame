@@ -48,9 +48,7 @@ stop_trace(Tracer, Target) ->
     erlang:trace(Target, false, [all]),
     Tracer ! {dump_bytes, self()},
 
-    Ret = receive {bytes, B} -> {ok, B}
-    after 5000 -> {error, timeout}
-    end,
+    Ret = receive {bytes, B} -> {ok, B} end,
 
     exit(Tracer, normal),
     Ret.
